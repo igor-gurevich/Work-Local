@@ -241,7 +241,7 @@ class SchematicsReviewer:
                 )
             )
 
-        if re.search(r"\bvref\b|\bvtt\b", lower_text) and "tolerance" not in lower_text:
+        if re.search(r"\bvref\b|\bvtt\b", lower_text) and not re.search(r"\btolerance\b", lower_text):
             findings.append(
                 ReviewFinding(
                     "Medium",
@@ -293,7 +293,7 @@ class SchematicsReviewer:
                 "Verify lane polarity, PERST#, REFCLK architecture, WAKE#, SMBus sideband requirements, equalization assumptions, and connector pinout.",
             )
         ]
-        if "100nf" not in lower_text and "0.1uf" not in lower_text and "ac coupling" not in lower_text:
+        if not re.search(r"\b100nf\b|\b0\.1uf\b|\bac\s+coupling\b", lower_text):
             findings.append(
                 ReviewFinding(
                     "Medium",
@@ -302,7 +302,7 @@ class SchematicsReviewer:
                     "Confirm TX AC-coupling capacitor placement, value, voltage rating, and side-of-link ownership per the PCIe specification and endpoint guide.",
                 )
             )
-        if "refclk" not in lower_text and "reference clock" not in lower_text:
+        if not re.search(r"\brefclk\b|\breference\s+clock\b", lower_text):
             findings.append(
                 ReviewFinding(
                     "Medium",
@@ -343,7 +343,7 @@ class SchematicsReviewer:
                 "Verify PHY strap pins, magnetics, Bob Smith termination, center taps, ESD protection, isolation, and LED polarity.",
             )
         ]
-        if "magnetics" not in lower_text and "transformer" not in lower_text:
+        if not re.search(r"\bmagnetics\b|\btransformer\b", lower_text):
             findings.append(
                 ReviewFinding(
                     "Medium",

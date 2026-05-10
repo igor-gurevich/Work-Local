@@ -7,7 +7,9 @@ from schematics_reviewer import SchematicsReviewer
 
 class SchematicsReviewerTests(unittest.TestCase):
     def test_reports_missing_schematic(self):
-        result = SchematicsReviewer().review("/tmp/does-not-exist.sch")
+        with tempfile.TemporaryDirectory() as directory:
+            missing_path = Path(directory) / "does-not-exist.sch"
+            result = SchematicsReviewer().review(missing_path)
 
         self.assertEqual(result.findings[0].severity, "Critical")
         self.assertIn("does not exist", result.findings[0].message)
