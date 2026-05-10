@@ -34,6 +34,8 @@ TEXT_EXTENSIONS = {
     ".xml",
 }
 
+DEFAULT_FOCUS_AREAS = "PCIe, DDR, Ethernet, power delivery, signal integrity"
+
 
 @dataclass(frozen=True)
 class ReviewFinding:
@@ -390,7 +392,7 @@ class SchematicsReviewerApp:
         self.reference_paths: list[Path] = []
 
         self.schematic_var = tk.StringVar()
-        self.focus_var = tk.StringVar(value="PCIe, DDR, Ethernet, power delivery, signal integrity")
+        self.focus_var = tk.StringVar(value=DEFAULT_FOCUS_AREAS)
 
         self._build_ui()
 

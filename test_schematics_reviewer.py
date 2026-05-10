@@ -17,10 +17,10 @@ class SchematicsReviewerTests(unittest.TestCase):
 
     def test_detects_missing_differential_polarity(self):
         with tempfile.TemporaryDirectory() as directory:
-            schematic = Path(directory) / "design.net"
-            schematic.write_text("Net D3P2_TXP[0] J10 B08 CONN2 C23\n", encoding="utf-8")
+            netlist = Path(directory) / "design.net"
+            netlist.write_text("Net D3P2_TXP[0] J10 B08 CONN2 C23\n", encoding="utf-8")
 
-            result = SchematicsReviewer().review(schematic, "PCIe")
+            result = SchematicsReviewer().review(netlist, "PCIe")
 
         diff_findings = [finding for finding in result.findings if finding.category == "Differential pairs"]
         self.assertEqual(len(diff_findings), 1)
