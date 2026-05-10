@@ -11,6 +11,7 @@ class SchematicsReviewerTests(unittest.TestCase):
             missing_path = Path(directory) / "does-not-exist.sch"
             result = SchematicsReviewer().review(missing_path)
 
+        self.assertGreaterEqual(len(result.findings), 1)
         self.assertEqual(result.findings[0].severity, "Critical")
         self.assertIn("does not exist", result.findings[0].message)
 
@@ -21,8 +22,10 @@ class SchematicsReviewerTests(unittest.TestCase):
 
             result = SchematicsReviewer().review(schematic, "PCIe")
 
-        messages = "\n".join(finding.message for finding in result.findings)
-        self.assertIn("missing the N polarity", messages)
+        diff_findings = [finding for finding in result.findings if finding.category == "Differential pairs"]
+        self.assertEqual(len(diff_findings), 1)
+        self.assertEqual(diff_findings[0].severity, "High")
+        self.assertIn("missing the N polarity", diff_findings[0].message)
 
     def test_detects_power_without_decoupling(self):
         with tempfile.TemporaryDirectory() as directory:

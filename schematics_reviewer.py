@@ -355,6 +355,7 @@ class SchematicsReviewer:
         return findings
 
     def _extract_differential_nets(self, text: str) -> dict[str, set[str]]:
+        # Matches common differential names such as TX_P, RXN, CLK0P, and DQS_N.
         net_pattern = re.compile(r"\b([A-Za-z][A-Za-z0-9_\-/]*?)(?:[_\-]?(P|N)|([PN]))(?:\[\d+\])?\b")
         pairs: dict[str, set[str]] = {}
         for match in net_pattern.finditer(text):
@@ -441,7 +442,7 @@ class SchematicsReviewerApp:
     def _run_review(self) -> None:
         schematic_file = self.schematic_var.get().strip()
         if not schematic_file:
-            messagebox.showerror("Missing schematic", "Select where to find the schematic file before running the review.")
+            messagebox.showerror("Missing schematic", "Please select a schematic file before running the review.")
             return
 
         result = self.reviewer.review(schematic_file, self.focus_var.get(), self.reference_paths)
