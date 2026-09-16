@@ -11,6 +11,10 @@ python build_leak_detection_deck.py
 
 Outputs `leak_detection_liquid_cooled_pcb.pptx` in the current directory.
 
+## Pre-built deck
+
+A pre-built copy of the presentation is included in this folder as `leak_detection_liquid_cooled_pcb.pptx`.
+
 ## References
 - Schneider Electric — Liquid Leak Detection in Datacenters
 - Honeywell — Liquid Leak Detection Sensors
